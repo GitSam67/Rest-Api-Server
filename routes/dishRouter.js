@@ -18,7 +18,8 @@ dishRouter.route('/')
         res.json(dishes);
     }, (err)=>next(err))
     .catch((err)=> next(err));   
-    })
+})
+
 .post(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{
     Dishes.create(req.body)
     .then((dish)=>{
@@ -29,10 +30,12 @@ dishRouter.route('/')
     }, (err)=>next(err))
     .catch((err)=> next(err));
 })
+
 .put(authenticate.verifyAdmin,(req,res,next)=>{
     res.statusCode = 403;
     res.send("PUT request is not supported for selecting dishes..");
 })
+
 .delete(authenticate.verifyUser,authenticate.verifyAdmin,(req,res,next)=>{
     Dishes.remove({})
     .then((resp)=>{
@@ -54,10 +57,12 @@ dishRouter.route('/:dishId')
     }, (err)=>next(err))
     .catch((err)=> next(err));
 })
+
 .post(authenticate.verifyAdmin,(req,res,next)=>{
     res.statusCode = 403;
     res.send("POST request is not supported for updating dishes..");
 })
+
 .put(authenticate.verifyUser, authenticate.verifyAdmin,(req,res,next)=>{
    Dishes.findByIdAndUpdate(req.params.dishId, {
     $set: req.body}
@@ -71,6 +76,7 @@ dishRouter.route('/:dishId')
     }, (err)=>next(err))
     .catch((err)=> next(err));
 })
+
 .delete(authenticate.verifyUser, authenticate.verifyAdmin,(req,res,next)=>{
     Dishes.findByIdAndRemove(req.params.dishId)
     .then((resp)=>{
@@ -99,6 +105,7 @@ dishRouter.route('/:dishId/comments')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
+
 .post(authenticate.verifyUser,(req, res, next) => {
     Dishes.findById(req.params.dishId)
     .then((dish) => {
@@ -124,11 +131,13 @@ dishRouter.route('/:dishId/comments')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
+
 .put((req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /dishes/'
         + req.params.dishId + '/comments');
 })
+
 .delete(authenticate.verifyUser, authenticate.verifyAdmin,(req, res, next) => {
     Dishes.findById(req.params.dishId)
     .then((dish) => {
@@ -175,11 +184,13 @@ dishRouter.route('/:dishId/comments/:commentId')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
+
 .post((req, res, next) => {
     res.statusCode = 403;
     res.end('POST operation not supported on /dishes/'+ req.params.dishId
         + '/comments/' + req.params.commentId);
 })
+
 .put(authenticate.verifyUser,(req, res, next) => {
     Dishes.findById(req.params.dishId)
     .then((dish) => {

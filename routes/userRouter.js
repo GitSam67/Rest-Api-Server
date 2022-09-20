@@ -68,7 +68,7 @@ userRouter.route("/logout")
 .get((req,res,next)=>{
     if(req.session){
         req.session.destroy();
-        res.clearCookie("usersession");
+        res.clearCookie("rest-server");
         res.json({Status: "Logged out of the system.."});
     }
     else{
