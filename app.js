@@ -12,6 +12,7 @@ const config = require("./config");
 const index = require("./index");
 const userRouter = require("./routes/userRouter");
 const dishRouter = require("./routes/dishRouter");
+const favRouter = require("./routes/favRouter");
 
 const hostname = "localhost";
 const port = process.env.PORT || 3000;
@@ -43,6 +44,7 @@ app.use(passport.session());
 app.use("/users", userRouter);
 app.use("/", index);
 app.use("/dishes", dishRouter);
+app.use("/favorites", favRouter);
 
 
 server.listen(port, hostname, ()=>{
